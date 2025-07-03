@@ -4,8 +4,9 @@ import Total from "./components/Total"
 
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const parts = [
+  const course = {
+    name: 'Half Stack application development',
+    parts : [
     {
       id: 0,
       name: 'Fundamentals of React',
@@ -21,14 +22,15 @@ const App = () => {
       name: 'State of a component',
       exercises: 14
     }
-  ]
+    ]
+  }
 
 
   return (
     <div>
       <Header course={course} />
-      <Content parts={parts} />
-      <Total parts={parts} />
+      <Content course={course} />
+      <Total course={course} />
     </div>
   )
 }

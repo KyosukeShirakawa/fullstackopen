@@ -1,6 +1,6 @@
 function Header({course}) {
   return (
-    <p>{course}</p>
+    <p>{course.name}</p>
   )
 
 }
