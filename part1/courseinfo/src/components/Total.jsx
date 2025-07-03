@@ -1,7 +1,8 @@
-function Total({exercises1, exercises2, exercises3}) {
+function Total({parts}) {console.log(parts)
+  const total = parts.reduce((sum, p) =>  sum +p.exercises, 0)
   return (
       <p>
-        Number of exercises {exercises1 + exercises2 + exercises3}
+        Number of exercises {total}
       </p>
 )
 

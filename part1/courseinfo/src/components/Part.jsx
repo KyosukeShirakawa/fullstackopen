@@ -1,7 +1,7 @@
 function Part({part}) {
   return (
       <p>
-        {part.part} {part.exercise}
+        {part.name} {part.exercises}
       </p>
 )
 

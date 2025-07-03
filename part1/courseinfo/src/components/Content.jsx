@@ -3,9 +3,7 @@ import Part from "./Part"
 function Content({parts}) {
   return (
     <div>
-      <Part part={parts[0]}/>
-      <Part part={parts[1]}/>
-      <Part part={parts[2]}/>
+      {parts.map(p => <Part key={p.id} part={p} />)}
     </div>
 )
 
