@@ -21,12 +21,16 @@ const Statistics = (props) => {
   return (
     <>
       <h1>statistics</h1>
-      <Display text='good' value={good}/>
-      <Display text='neutral' value={neutral}/>
-      <Display text='bad' value={bad}/>
-      <Display text='all' value={getSum()} />
-      <Display text='average' value={getAverage()} />
-      <Display text='positive' value={getPositive()} />
+      <table>
+        <tbody>
+          <Display text='good' value={good}/>
+          <Display text='neutral' value={neutral}/>
+          <Display text='bad' value={bad}/>
+          <Display text='all' value={getSum()} />
+          <Display text='average' value={getAverage()} />
+          <Display text='positive' value={getPositive()} />
+        </tbody>
+      </table>
     </>
   )
 }
