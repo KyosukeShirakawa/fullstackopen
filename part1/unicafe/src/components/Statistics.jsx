@@ -2,7 +2,7 @@ import Display from "./Display"
 
 const Statistics = (props) => {
   const {good, neutral, bad} = props
-  
+
   const getSum = () => good+neutral+bad
   const getAverage = () => {
     if(getSum() ==0) return 0
@@ -13,6 +13,10 @@ const Statistics = (props) => {
     if(getSum() ==0) return 0
 
     return good/getSum()*100
+  }
+
+  if(getSum() == 0) {
+    return <p>No feedback given</p>
   }
   return (
     <>
