@@ -12,15 +12,29 @@ const App = () => {
       const updatedgood = good+1;
       setGood(updatedgood)
   }
-    const handleClickNeutral = () => {
+  const handleClickNeutral = () => {
       const updatedneutral = neutral+1;
       setNeutral(updatedneutral)
   }
 
-    const handleClickBad = () => {
+  const handleClickBad = () => {
       const updatedbad = bad+1;
       setBad(updatedbad)
   }
+  const getSum = () => good+neutral+bad
+  const getAverage = () => {
+    if(getSum() ==0) return 0
+
+    return (good-bad) / getSum()
+  }
+
+  const getPositive = () => {
+    if(getSum() ==0) return 0
+
+    return good/getSum()*100
+  }
+
+
 
 
   return (
@@ -33,6 +47,9 @@ const App = () => {
       <Display text='good' value={good}/>
       <Display text='neutral' value={neutral}/>
       <Display text='bad' value={bad}/>
+      <Display text='all' value={getSum()} />
+      <Display text='average' value={getAverage()} />
+      <Display text='positive' value={getPositive()} />
     </div>
   )
 }
