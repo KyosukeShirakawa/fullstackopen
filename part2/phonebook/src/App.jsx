@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-import axios from 'axios';
+import personServices from './services/personServices'
+
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -10,32 +11,54 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
 
-  const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
-  }
-  useEffect(hook, [])
+  useEffect(() => {
+    personServices
+      .getAll()
+      .then(data => setPersons(data))
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const found = persons.find(person => person.name == newName)
-    if(found) {
-      alert(`${newName} is already added`);
-      setNewName('')
-      setNewNumber('')
-      return;
-    }
-    const person = {
-      id: persons.length +1,
+    const newPerson = {
       name: newName,
       number: newNumber
     }
-    setPersons(persons.concat(person))
-    setNewName('')
-    setNewNumber('')
+    const found = persons.find(person => person.name == newName)
+    if(found) {
+      if(confirm(`${newName} is already added, replace the old number with a new one?`)) {
+        updateNumber(found.id, newPerson)
+        setNewName('')
+        setNewNumber('')
+      }
+      return;
+    }
+
+
+    personServices
+      .create(newPerson)
+      .then(data => {
+        setPersons(persons.concat(data))
+        setNewName('')
+        setNewNumber('')
+      })
+  }
+  const updateNumber = (id, newPerson) => {
+    personServices
+      .update(id, newPerson)
+      .then(data => {
+        setPersons(persons.map(person => person.id ===id ? data : person))
+      })
+
+  }
+  const handleDelete = (id) => {
+    const person = persons.find(person => person.id === id)
+    if(confirm(`do you really wanna delete ${person.name}`)) {
+      personServices
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter(person => person.id != id))
+        })
+    }
   }
   const handleChangeName = (e) => {
     setNewName(e.target.value)
@@ -43,8 +66,8 @@ const App = () => {
   const handleChangeNumber = (e) => {
     setNewNumber(e.target.value)
   }
-  const handleChangeFilter = (e) => {
-    setNewFilter(e.target.value)
+  const handleChangeFilter = (id) => {
+    setNewFilter(id)
   }
 
   const personsToShow = persons.filter(person => person.name.toUpperCase().includes(newFilter.toUpperCase()))
@@ -56,7 +79,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm onSubmit={handleSubmit} valueName={newName} valueNumber={newNumber} onChangeName={handleChangeName} onChangeNumber={handleChangeNumber}/>
       <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} handleDelete={handleDelete}/>
     </div>
   )
 }
