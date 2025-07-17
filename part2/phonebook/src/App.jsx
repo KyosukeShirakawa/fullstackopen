@@ -39,7 +39,6 @@ const App = () => {
       return;
     }
 
-
     personServices
       .create(newPerson)
       .then(data => {
@@ -74,7 +73,7 @@ const App = () => {
         .remove(id)
         .then(() => {
           setPersons(persons.filter(person => person.id != id))
-           setMessage(`${person.name}'s data has been deleted`)
+          setMessage(`${person.name}'s data has been deleted`)
           setTimeout(() => {
             setMessage(null)
           }, 5000)
@@ -87,11 +86,11 @@ const App = () => {
   const handleChangeNumber = (e) => {
     setNewNumber(e.target.value)
   }
-  const handleChangeFilter = (id) => {
-    setNewFilter(id)
+  const handleChangeFilter = (e) => {
+    setNewFilter(e.target.value)
   }
 
-  const personsToShow = persons.filter(person => person.name.toUpperCase().includes(newFilter.toUpperCase()))
+  const personsToShow = persons.filter( person => person.name.toUpperCase().includes(newFilter.toUpperCase()))
 
   return (
     <div>

@@ -4,11 +4,7 @@ const morgan = require('morgan')
 
 morgan.token('type', function (req, res) { return JSON.stringify(req.body)})
 
-
-
-
-
-
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(morgan(":method :url :status :type"))
 let persons =  [
